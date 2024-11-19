@@ -11,15 +11,17 @@ import (
 )
 
 const (
-	SeepIPProvider = "seeip"
-	IpifyProvider  = "ipify"
-	MockIpProvider = "mockip"
+	SeepIPProvider   = "seeip"
+	SeepIPV4Provider = "seeipv4"
+	IpifyProvider    = "ipify"
+	MockIpProvider   = "mockip"
 )
 
 var (
-	SeeIP  = &SimpleProvider{Name: "seeip", URL: "https://api.seeip.org"}
-	Ipify  = &SimpleProvider{Name: "ipify", URL: "https://api.ipify.org"}
-	MockIp = &SimpleProvider{Name: "mockip", URL: ""}
+	SeeIP   = &SimpleProvider{Name: "seeip", URL: "https://api.seeip.org"}
+	SeeIPV4 = &SimpleProvider{Name: "seeipv4", URL: "https://ipv4.seeip.org"}
+	Ipify   = &SimpleProvider{Name: "ipify", URL: "https://api.ipify.org"}
+	MockIp  = &SimpleProvider{Name: "mockip", URL: ""}
 )
 
 type RequestDoer interface {
@@ -86,9 +88,10 @@ func (s *SimpleProvider) doRequest(ctx context.Context, url string) (string, err
 
 func ProviderOrDefault(name string) Provider {
 	p := map[string]Provider{
-		SeepIPProvider: SeeIP,
-		IpifyProvider:  Ipify,
-		MockIpProvider: MockIp,
+		SeepIPProvider:   SeeIP,
+		SeepIPV4Provider: SeeIPV4,
+		IpifyProvider:    Ipify,
+		MockIpProvider:   MockIp,
 	}[name]
 	if p == nil {
 		p = SeeIP
